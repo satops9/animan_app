@@ -1,0 +1,30 @@
+body {
+	background-color : white;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 16px;
+  padding: 4px 8px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.tag a {
+  text-decoration: none;
+}
+
+.tag span {
+  margin-right: 4px;
+}
+
+.remove-button {
+  border: none;
+  background-color: transparent;
+  color: #999;
+  font-size: 12px;
+  margin-left: 4px;
+  cursor: pointer;
+}
