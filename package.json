@@ -9,7 +9,7 @@
         "preview": "vite preview",
         "rm": "rm -rf docs",
         "mv": "mv build docs",
-        "git": "git add --all . && git commit -m 'Initial commit' && git push -u origin master",
+        "git": "git add --all . && git commit -m 'Initial commit' && git push -u origin main",
         "deploy": "npm run rm && npm run build && npm run mv && npm run git"
     },
     "devDependencies": {
