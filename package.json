@@ -5,7 +5,7 @@
     "version": "0.0.0",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && php artisan serve",
         "preview": "vite preview",
         "rm": "rm -rf docs",
         "mv": "mv build docs",
