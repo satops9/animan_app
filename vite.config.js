@@ -8,8 +8,9 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/css/app2.css',
+                'resources/js/animan_app/css/main.css',
                 'resources/sass/app.scss',
-                'resources/js/app.js',
+                'resources/js/app.ts',
             ],
             refresh: true,
         }),

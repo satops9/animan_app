@@ -6,9 +6,9 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Test Laravel</title>
-        @vite(['resources/css/app2.css', 'resources/js/app.js'])
+        @vite(['resources/js/animan_app/css/main.css', 'resources/js/app.ts'])
     </head>
     <body>
-        <dev id="test2"></dev>
+        <dev id="appTest"></dev>
     </body>
 </html>

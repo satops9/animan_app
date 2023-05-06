@@ -1,0 +1,45 @@
+.weapper {
+    width: 1170px;
+    max-width: 100%;
+    overflow: hidden;
+   }
+
+   .Header {
+    position: fixed;
+    display: flex;
+    z-index: 999;
+    top: 0; left: 0;
+    width: 100%; height: 60px;
+    background-color: orange;
+    color: white;
+    box-sizing:content-box;
+   }
+ 
+   .Header .title{
+    display: inline;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+   }
+ 
+  ul {
+    list-style: none;
+   }
+ 
+   li {
+    display:inline-flex;
+    margin-left: 8px;
+    text-decoration: none;
+    border:1px solid rgb(136, 98, 28);
+    border-radius: 8px;
+    box-shadow:0 0 10px rgb(136, 98, 28);
+    padding: 5px;
+    background-color: orange;
+    color: white;
+    text-align: center;
+   }
+
+   .main { /* 全体の設定 */
+    margin-Top: 60px;
+    padding: 10px;
+    color: orange;
+   }
