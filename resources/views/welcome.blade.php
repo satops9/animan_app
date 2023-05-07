@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-100" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,9 @@
         <title>Test Laravel</title>
         @vite(['resources/js/animan_app/css/main.css', 'resources/js/app.ts'])
     </head>
-    <body>
+    <body class="h-100">
+        <dev class="weapper">
         <dev id="appTest"></dev>
+        </dev>
     </body>
 </html>

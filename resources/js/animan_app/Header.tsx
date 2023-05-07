@@ -4,13 +4,9 @@ import "./css/main.css";
 
 function Header(){
     return (
-        <>
-        <div className="weapper">
-            <div className="Header">
+        <div className="Header">
         <h1>Header</h1>
         </div>
-        </div>
-        </>
     )
 }
 
