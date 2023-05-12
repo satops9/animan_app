@@ -21,11 +21,11 @@
     color: black;
    }
  
-  ul {
+  #mi ul {
     list-style: none;
    }
  
-   li {
+   #mi li {
     display:inline-flex;
     margin-left: 8px;
     text-decoration: none;
@@ -39,7 +39,89 @@
    }
 
    .main { /* 全体の設定 */
-    margin-Top: 60px;
-    padding: 10px;
-    color: green;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 100%));
+    grid-auto-rows: 500px;
+    background-color: orange;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
    }
+
+   ul {
+    list-style: none;
+   }
+
+    .link-preview {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height:500px;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+    }
+    
+    img.icon {
+    min-width: 300px;
+    max-width: 300px;
+    max-height: 150px;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+    object-fit: cover;
+    }
+    
+    .text-container {
+    flex-grow: 1;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    border-top: none;
+    border-left: none;
+    max-width: 300px;
+    max-height:500px;
+    padding: 10px;
+    }
+
+    #forms {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(100px, 10%));
+      grid-auto-rows: 100px;
+      background-color: orange;
+      color: black;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid orange;
+      margin: auto;
+    }
+
+    #urlForm {
+      width: 100%;
+      display: inline-flex;
+      border-radius: 8px;
+    }
+
+    #tagForm {
+      width: 100%;
+      display: inline-flex;
+      border-radius: 8px;
+    }
+
+    #tags {
+      display: inline-flex;
+      border-radius: 8px;
+      border: 1px solid rgb(136, 98, 28);
+      box-shadow: 0 0 10px rgb(136, 98, 28);
+      background-color: orange;
+      padding: 5px;
+    }

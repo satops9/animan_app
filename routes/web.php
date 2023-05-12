@@ -27,6 +27,7 @@ Route::get('/get_csrf_token', function() {
 });
 
 Route::post('/get_title', 'App\Http\Controllers\TitleController@getTitle');
+Route::post('/get_metatag', 'App\Http\Controllers\MetaTagController@getMetaTag');
 Route::post('/get_html', 'App\Http\Controllers\HtmlController@getHtml');
 
 

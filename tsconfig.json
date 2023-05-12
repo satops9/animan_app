@@ -8,7 +8,7 @@
         "skipLibCheck": true,   // Skip type checking of declaration files
         "noImplicitAny": false,  // Bypass raising errors on `any` type
         "jsx": "react",
-        "lib": ["es2015", "es2017.object", "dom"],
+        "lib": ["es2016", "es2017.object", "dom"],
         "allowSyntheticDefaultImports": true
     },
     "include": ["resources/js/**/*"] // Frontend paths pattern

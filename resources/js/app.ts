@@ -20,3 +20,4 @@ import './components/Test2';
 import './components/App';
 import './components/AppCheck';
 import './animan_app/AppTest';
+import './animan_app/MainApp';
