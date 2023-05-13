@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Test Laravel</title>
+        <title>Animan_app</title>
         @vite(['resources/js/animan_app/css/main.css', 'resources/js/app.ts'])
     </head>
     <body class="h-100">
