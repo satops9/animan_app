@@ -82,7 +82,7 @@ function MainApp() {
   };
 
   useEffect(() => {
-    // cokkieからタグを取得する
+    // cookieからタグを取得する
     const metas = Cookies.get("metaList");
     const arrayTags = Cookies.get("arrayTag");
     if (metas) {
@@ -103,7 +103,7 @@ function MainApp() {
     }, [meta]);
 
     useEffect(() => {
-    // タグが更新された場合、cokkieも更新する
+    // タグが更新された場合、cookieも更新する
     Cookies.set("arrayTag", JSON.stringify(array));
     }, [array]);
 
