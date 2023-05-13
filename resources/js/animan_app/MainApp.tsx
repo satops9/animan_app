@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import "./css/main.css";
 import { tagsGrid } from "./emotionCss";
 import { css } from "@emotion/react";
+import Cookies from "js-cookie";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 //metaタグの中身
 type Meta = {
@@ -80,15 +82,35 @@ function MainApp() {
   };
 
   useEffect(() => {
+    // cokkieからタグを取得する
+    const metas = Cookies.get("metaList");
+    const arrayTags = Cookies.get("arrayTag");
+    if (metas) {
+      const list: Meta[] = JSON.parse(metas);
+      setMeta(list);
+    }
+    if (arrayTags) {
+      const list: string[] = JSON.parse(arrayTags);
+      setArray(list);
+    }
+  }, []);
+
+  useEffect(() => {
     // metaタグが更新された場合、metaListも更新する
     setMetaList(meta);
     console.log("metaList更新");
+    Cookies.set("metaList", JSON.stringify(meta));
     }, [meta]);
 
+    useEffect(() => {
+    // タグが更新された場合、cokkieも更新する
+    Cookies.set("arrayTag", JSON.stringify(array));
+    }, [array]);
+
   useEffect(() => {
-    // 検索結果記事を抽出する
+    // 選択結果を抽出する
     setMetaList((prevList) => {
-      // タグに一致する記事をfilterで抽出
+      // タグに一致する記録をfilterで抽出
       let newList = prevList.filter((obj) => {
         let result = selectedTag.every((tag) => {
           const findResult = obj.tag.find((kijiTag) => kijiTag === tag);
@@ -98,7 +120,7 @@ function MainApp() {
             return false;
           }
         });
-        // 選択中タグを全て含む記事をtrueとして返却
+        // 選択中タグを全て含む記録をtrueとして返却
         return result;
       });
       return newList;
@@ -149,6 +171,15 @@ function MainApp() {
     }
   };
 
+  // 記事削除処理
+  const removeItem = (index) => {
+    const newMetaList = [...metaList];
+    const newMeta = [...meta];
+    newMetaList.splice(index, 1);
+    newMeta.splice(index, 1);
+    setMeta(newMeta);
+  }
+
 
     return (
         <>
@@ -179,27 +210,62 @@ function MainApp() {
       </div>
         <br/>
         <br/>
-        <br/>
-            <ul className="main">
-            {metaList.map((item, index) => {
+        <div className="main_list_all">
+        <Tabs>
+            <TabList>
+              <Tab>Card</Tab>
+              <Tab>List</Tab>
+            </TabList>
+            <TabPanel>
+            <div className="main">
+              {metaList.map((item, index) => {
                 return (
-                    <li className='link-preview' key={index}>
+                  <div className='link-preview' key={index}>
+                    <button className='delete-button' onClick={() => removeItem(index)}>×</button>
                     <img src={item.og_image} className='icon' />
                     <div className='text-container'>
-                        <h5>{item.og_title}</h5>
-                        <p>タグ：{item.tag.map((tags) => {
-                            return (
-                                <span id="tags">{tags}</span>
-                            )
-                        })}</p>
-                        <p>{item.og_description}</p>
-                        <a href={item.og_url} target='_blank'>Read more</a>
+                      <h5>{item.og_title}</h5>
+                      <p>タグ：{item.tag.map((tags) => {
+                          return (
+                              <span id="tags">{tags}</span>
+                          )
+                      })}</p>
+                      <p>{item.og_description}</p>
+                      <a href={item.og_url} target='_blank'>Read more</a>
                     </div>
-                    </li>
+                  </div>
                 )
-            }
-            )}
-            </ul>
+              })}
+            </div>
+            </TabPanel>
+            <TabPanel>
+            <div className="main_list">
+                  <div><h5>タイトル</h5></div>
+                  <div><h5>タグ</h5></div>
+                  <div><h5>削除</h5></div> 
+            </div>
+              {metaList.map((item, index) => {
+                return (
+                  <div className="main_list">
+                  <div key={index}>
+                      <a href={item.og_url} target='_blank'>{item.og_title}</a>
+                  </div>
+                  <div key={index}>
+                  {item.tag.map((tags) => {
+                          return (
+                              <text id="tags">{tags}</text>
+                          )
+                      })}
+                  </div>
+                  <div key={index}>
+                  <button onClick={() => removeItem(index)}>×</button>
+                  </div>
+                  </div>
+                )
+              })}
+            </TabPanel>
+        </Tabs>
+        </div>
         </>
     )
 }
