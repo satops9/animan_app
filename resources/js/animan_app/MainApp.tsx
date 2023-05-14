@@ -130,11 +130,9 @@ function MainApp() {
 
     // クリーンアップ処理
     return () => {
-      // 検索結果を初期状態に戻す
       setMetaList(() => meta);
       console.log("clean");
     };
-    // タグが選択された時に実行する
   }, [selectedTag]);
 
 
