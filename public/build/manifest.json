@@ -1,0 +1,33 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-8ae1c78e.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/css/app2.css": {
+    "file": "assets/app2-4f9b8173.css",
+    "isEntry": true,
+    "src": "resources/css/app2.css"
+  },
+  "resources/js/animan_app/css/main.css": {
+    "file": "assets/main-c3309f4c.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.css": {
+    "file": "assets/main-c3309f4c.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.ts": {
+    "css": [
+      "assets/main-c3309f4c.css"
+    ],
+    "file": "assets/app-0d4d30de.js",
+    "isEntry": true,
+    "src": "resources/js/app.ts"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-3ea8b221.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
+  }
+}
