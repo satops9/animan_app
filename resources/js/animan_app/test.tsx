@@ -21,7 +21,6 @@ const Test: React.FC = () => {
           setResults(diceResults);
           setResultTotal(total);
           let displayText = input;
-          console.log(displayText.replace(match[0], ` ${match[0] + "@"}`));
           setResultDice(displayText.replace(match[0], ` ${match[0] + "@"}`));
         }
       };
@@ -42,7 +41,6 @@ const Test: React.FC = () => {
         if (results.length > 0) {
           displayText = displayText.replace("@", ` ${results.join(", ")} (${resultTotal})`);
         }
-        console.log(displayText);
         return displayText;
       };
     
