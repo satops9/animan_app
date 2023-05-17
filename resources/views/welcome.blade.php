@@ -10,7 +10,7 @@
     </head>
     <body class="h-100">
         <dev class="weapper">
-        <dev id="mainApp"></dev>
+        <dev id="test"></dev>
         </dev>
     </body>
 </html>
