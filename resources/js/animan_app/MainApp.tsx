@@ -41,11 +41,17 @@ function MainApp() {
 
     // urlからmetaタグの内容を取得する
     if (url_Ref.current !== null) {
+      const formData = new FormData();
+      formData.append('url', url_Ref.current.value);
       // nullチェックを追加
-      const response = await axios.post("/get_metatag", {
-        url: url_Ref.current.value
-      });
+      const response = await axios.post('https://zatops.com/laravel/public/main.php', formData, {
+                              headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded' // リクエストヘッダーを設定
+                              }
+                        });
       const data = response.data;
+
+      console.log(data);
 
       const url = data.metaItems.ogUrl;
       const title = data.metaItems.ogTitle;

@@ -1,44 +1,54 @@
 <?php
 if (isset($_POST['url'])) {
-    $url = $_POST['url'];
-    $html = file_get_contents($url);
+    $url = filter_var($_POST['url'], FILTER_VALIDATE_URL); // URLの検証とクリーンアップ
 
-    $doc = new DOMDocument();
-    @$doc->loadHTML($html);
+    if ($url !== false) {
+        // セキュリティ対策として、cURLを使用して外部のURLからHTMLを取得する
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $html = curl_exec($ch);
+        curl_close($ch);
 
-    $metaTags = $doc->getElementsByTagName('meta');
+        $doc = new DOMDocument();
+        @$doc->loadHTML($html);
 
-    $ogTitle = "";
-    $ogDescription = "";
-    $ogImage = "";
-    $pageTitle = "";
+        $metaTags = $doc->getElementsByTagName('meta');
 
-    foreach ($metaTags as $tag) {
-        if ($tag->hasAttribute('property')) {
-            $property = $tag->getAttribute('property');
-            if ($property === 'og:title') {
-                $ogTitle = $tag->getAttribute('content');
-            } elseif ($property === 'og:description') {
-                $ogDescription = $tag->getAttribute('content');
-            } elseif ($property === 'og:image') {
-                $ogImage = $tag->getAttribute('content');
+        $ogTitle = "";
+        $ogDescription = "";
+        $ogImage = "";
+        $pageTitle = "";
+
+        foreach ($metaTags as $tag) {
+            if ($tag->hasAttribute('property')) {
+                $property = $tag->getAttribute('property');
+                if ($property === 'og:title') {
+                    $ogTitle = $tag->getAttribute('content');
+                } elseif ($property === 'og:description') {
+                    $ogDescription = $tag->getAttribute('content');
+                } elseif ($property === 'og:image') {
+                    $ogImage = $tag->getAttribute('content');
+                }
             }
         }
+
+        if ($doc->getElementsByTagName("title")->length > 0) {
+            $pageTitle = $doc->getElementsByTagName("title")[0]->textContent;
+        }
+
+        $metaItems = [
+            'ogUrl' => $url,
+            'ogTitle' => $ogTitle,
+            'ogDescription' => $ogDescription,
+            'ogImage' => $ogImage,
+            'pageTitle' => $pageTitle
+        ];
+
+        header('Content-Type: application/json');
+        echo json_encode(['metaItems' => $metaItems]);
+    } else {
+        echo 'Invalid URL'; // URLが無効な場合のエラーハンドリング
     }
-
-    if ($doc->getElementsByTagName("title")->length > 0) {
-        $pageTitle = $doc->getElementsByTagName("title")[0]->textContent;
-    }
-
-    $metaItems = [
-        'ogUrl' => $url,
-        'ogTitle' => $ogTitle,
-        'ogDescription' => $ogDescription,
-        'ogImage' => $ogImage,
-        'pageTitle' => $pageTitle
-    ];
-
-    header('Content-Type: application/json'); // JSONレスポンスを返すためにヘッダーを設定する
-    echo json_encode(['metaItems' => $metaItems]);
 }
 ?>
