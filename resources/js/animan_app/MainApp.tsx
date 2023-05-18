@@ -44,7 +44,7 @@ function MainApp() {
       const formData = new FormData();
       formData.append('url', url_Ref.current.value);
       // nullチェックを追加
-      const response = await axios.post('https://zatops.sakura.ne.jp/laravel/public/main.php', formData, {
+      const response = await axios.post('https://zatops.sakura.ne.jp/animan_apps/bkm/main.php', formData, {
                               headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded' // リクエストヘッダーを設定
                               }
