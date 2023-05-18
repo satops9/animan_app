@@ -1,7 +1,7 @@
 {
     "name": "test",
     "private": true,
-    "homepage": "./",
+    "homepage": "https://zatops.sakura.ne.jp/",
     "version": "0.0.0",
     "scripts": {
         "dev": "vite",

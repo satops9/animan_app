@@ -6,6 +6,7 @@ import { tagsGrid } from "./emotionCss";
 import { css } from "@emotion/react";
 import Cookies from "js-cookie";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import axios from "axios";
 
 //metaタグの中身
 type Meta = {
@@ -39,18 +40,12 @@ function MainApp() {
     event.preventDefault();
 
     // urlからmetaタグの内容を取得する
-    const token = await getToken();
     if (url_Ref.current !== null) {
       // nullチェックを追加
-      const response = await fetch("/get_metatag", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": token,
-        },
-        body: JSON.stringify({ url: url_Ref.current.value }),
+      const response = await axios.post("/get_metatag", {
+        url: url_Ref.current.value
       });
-      const data = await response.json();
+      const data = response.data;
 
       const url = data.metaItems.ogUrl;
       const title = data.metaItems.ogTitle;
