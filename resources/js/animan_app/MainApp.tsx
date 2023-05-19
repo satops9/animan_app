@@ -18,6 +18,14 @@ type Meta = {
   og_date: string;
 };
 
+// 通知の中身
+type Notice = {
+  url: string;
+  res: string;
+  b_time: string;
+  a_time: string;
+};
+
 function MainApp() {
   const [meta, setMeta] = useState<Meta[]>([]);
   const [metaList, setMetaList] = useState<Meta[]>(meta);
