@@ -74,6 +74,20 @@
     cursor: pointer;
   }
 
+  .delete-button_t {
+    position:inherit;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 5px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+  }
+
     .link-preview {
     position: relative;
     display: inline-flex;

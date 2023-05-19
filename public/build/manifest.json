@@ -10,18 +10,18 @@
     "src": "resources/css/app2.css"
   },
   "resources/js/animan_app/css/main.css": {
-    "file": "assets/main-c3309f4c.css",
+    "file": "assets/main-6837ff4c.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/main-c3309f4c.css",
+    "file": "assets/main-6837ff4c.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.ts": {
     "css": [
-      "assets/main-c3309f4c.css"
+      "assets/main-6837ff4c.css"
     ],
-    "file": "assets/app-79016f7a.js",
+    "file": "assets/app-cc8d577f.js",
     "isEntry": true,
     "src": "resources/js/app.ts"
   },

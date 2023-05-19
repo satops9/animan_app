@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./css/main.css";
-import { tagsGrid } from "./emotionCss";
+import { tagsGrid, tagsGrid_up } from "./emotionCss";
 import { css } from "@emotion/react";
 import Cookies from "js-cookie";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -24,28 +24,23 @@ function MainApp() {
   const [selectedTag, setSelectedTag] = useState<string[]>([]);
 
   const [array, setArray] = useState(["main", "art", "sub"]);
+  const [arrayList, setArrayList] = useState<string[]>(array);
 
   // meta内容の取得
   const url_Ref = useRef<HTMLInputElement>(null);
   const tag_Ref = useRef<HTMLInputElement>(null);
-
-  // URLタイトル取得
-  async function getToken() {
-    const response = await fetch("/get_csrf_token");
-    const token = await response.text();
-    return token;
-  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // urlからmetaタグの内容を取得する
     if (url_Ref.current !== null) {
+      if(url_Ref.current.value !== ""){
       const formData = new FormData();
       formData.append('url', url_Ref.current.value);
       // nullチェックを追加
       // https://zatops.sakura.ne.jp/animan_apps/bkm/main.php
-      const response = await axios.post('/get_metatag', formData, {
+      const response = await axios.post('http://127.0.0.1:8000/main.php', formData, {
                               headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded' // リクエストヘッダーを設定
                               }
@@ -80,21 +75,56 @@ function MainApp() {
           og_date: date,
         },
       ]);
+    }else{
+      var tags: string[] = [];
+      if (tag_Ref.current && tag_Ref.current.value) {
+        const tag : Array<string> = tag_Ref.current.value.split(",");
+        tags = tag;
+        const newTags = tags.filter((t) => !array.includes(t)); // 重複したタグをはじく
+        setArray((prevArray) => [...prevArray, ...newTags]);
+      }
     }
+  }
   };
 
-  useEffect(() => {
+// 記事削除処理
+const removeItem = (index) => {
+  const newMetaList = [...metaList];
+  const newMeta = [...meta];
+  newMetaList.splice(index, 1);
+  newMeta.splice(index, 1);
+  setMeta(newMeta);
+}
+
+// tag削除処理 arrayから削除
+const removeTag = (index) => {
+  const newTag = [...array];
+  newTag.splice(index, 1);
+  console.log(`newTag:${newTag}`);
+  setArray(newTag);
+  setArrayList(newTag);
+}
+
+  function cookieSet(){
     // cookieからタグを取得する
     const metas = Cookies.get("metaList");
-    const arrayTags = Cookies.get("arrayTag");
+    const arrays = Cookies.get("array");
     if (metas) {
-      const list: Meta[] = JSON.parse(metas);
-      setMeta(list);
+        const list: Meta[] = JSON.parse(metas);
+        setMeta(list);
+      }
+      if (arrays) {
+        const list: string[] = JSON.parse(arrays);
+        console.log(`arrayList:${list}`);
+        setArray(list);
+        setArrayList(list);
     }
-    if (arrayTags) {
-      const list: string[] = JSON.parse(arrayTags);
-      setArray(list);
-    }
+  }
+
+  // F5対応
+  useEffect(() => {
+    // cookieからタグを取得する
+    cookieSet();
   }, []);
 
   useEffect(() => {
@@ -106,36 +136,41 @@ function MainApp() {
 
     useEffect(() => {
     // タグが更新された場合、cookieも更新する
-    Cookies.set("arrayTag", JSON.stringify(array));
+    setArrayList(array);
+    console.log("array更新");
+    Cookies.set("array", JSON.stringify(array));
+    console.log(`array:${array}`);
     }, [array]);
 
   useEffect(() => {
-    // 選択結果を抽出する
-    setMetaList((prevList) => {
-      // タグに一致する記録をfilterで抽出
-      let newList = prevList.filter((obj) => {
-        let result = selectedTag.every((tag) => {
-          const findResult = obj.tag.find((kijiTag) => kijiTag === tag);
-          if (findResult) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-        // 選択中タグを全て含む記録をtrueとして返却
-        return result;
+  console.log(`selectedTag:${selectedTag}`);
+  // 選択結果を抽出する
+  setMetaList((prevList) => {
+    // タグに一致する記録をfilterで抽出
+    let newList = meta.filter((obj) => {
+      let result = selectedTag.every((tag) => {
+        const findResult = obj.tag.find((kijiTag) => kijiTag === tag);
+        console.log(`tag:${tag}`);
+        if (findResult) {
+          return true;
+        } else {
+          return false;
+        }
       });
-      return newList;
+      // 選択中タグを全て含む記録をtrueとして返却
+      return result;
     });
+    return newList;
+  });
 
-    console.log("start");
+  console.log("start");
 
-    // クリーンアップ処理
-    return () => {
-      setMetaList(() => meta);
-      console.log("clean");
-    };
-  }, [selectedTag]);
+  // クリーンアップ処理
+  return () => {
+    setMetaList(meta); // meta配列自体をセットするように修正
+    console.log("clean");
+  };
+}, [selectedTag]);
 
 
   // タグ選択処理
@@ -149,7 +184,10 @@ function MainApp() {
 
     if (!check) {
       //未選択の場合は追加
-      setSelectedTag((selected) => [...selected, e.target.id]);
+      setSelectedTag((selected) => {
+        const updatedSelected = selected.filter((tag) => tag !== "");
+        return [...updatedSelected, e.target.id];
+      });
     } else {
       // 選択済の場合は削除
       // filterで選択したタグ以外のlistを作り直す
@@ -171,16 +209,6 @@ function MainApp() {
     }
   };
 
-  // 記事削除処理
-  const removeItem = (index) => {
-    const newMetaList = [...metaList];
-    const newMeta = [...meta];
-    newMetaList.splice(index, 1);
-    newMeta.splice(index, 1);
-    setMeta(newMeta);
-  }
-
-
     return (
         <>
         <form id="forms" onSubmit={handleSubmit}>
@@ -195,7 +223,7 @@ function MainApp() {
         <button type="submit">Submit</button>
         </form>
         <div css={[tagsGrid]}>
-        {array.map((val, i) => (
+        {arrayList.map((val, i) => (
           <button
             key={i}
             id={val}
@@ -205,10 +233,13 @@ function MainApp() {
             }
           >
             {val}
+            <span className="delete-button_t" onClick={() => removeTag(i)}>
+              ×
+            </span>
           </button>
         ))}
       </div>
-        <br/>
+      <div css={[tagsGrid_up]}><button onClick={() => cookieSet()}>更新</button></div>
         <br/>
         <div className="main_list_all">
         <Tabs>
