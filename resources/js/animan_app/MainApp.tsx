@@ -40,7 +40,8 @@ function MainApp() {
       formData.append('url', url_Ref.current.value);
       // nullチェックを追加
       // https://zatops.sakura.ne.jp/animan_apps/bkm/main.php
-      const response = await axios.post('http://127.0.0.1:8000/main.php', formData, {
+      // http://127.0.0.1:8000/main.php
+      const response = await axios.post('https://zatops.sakura.ne.jp/animan_apps/bkm/main.php', formData, {
                               headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded' // リクエストヘッダーを設定
                               }
